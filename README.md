@@ -237,6 +237,58 @@ Clients should not be forced to implement functions that they do not need. A cla
 It states that classes should depend upon interfaces or abstract classes instead of concrete classes or functions. OR
 A high level module should not depend on a low level module, but they should both depend on abstractions.
 
+
+[The Single Responsibility Principle states that a class should do one thing and therefore it should have only a single reason to change.
+
+To state this principle more technically: Only one potential change (database logic, logging logic, and so on.) in the software’s specification should be able to affect the specification of the class.
+
+This means that if a class is a data container, like a Book class or a Student class, and it has some fields regarding that entity, it should change only when we change the data model.
+
+Following the Single Responsibility Principle is important. First of all, because many different teams can work on the same project and edit the same class for different reasons, this could lead to incompatible modules.
+
+Second, it makes version control easier. For example, say we have a persistence class that handles database operations, and we see a change in that file in the GitHub commits. By following the SRP, we will know that it is related to storage or database-related stuff.
+
+Merge conflicts are another example. They appear when different teams change the same file. But if the SRP is followed, fewer conflicts will appear – files will have a single reason to change, and conflicts that do exist will be easier to resolve.
+
+Open-Closed Principle
+The Open-Closed Principle requires that classes should be open for extension and closed to modification.
+
+Modification means changing the code of an existing class, and extension means adding new functionality.
+
+So what this principle wants to say is: We should be able to add new functionality without touching the existing code for the class. This is because whenever we modify the existing code, we are taking the risk of creating potential bugs. So we should avoid touching the tested and reliable (mostly) production code if possible.
+
+But how are we going to add new functionality without touching the class, you may ask. It is usually done with the help of interfaces and abstract classes.
+
+Now that we have covered the basics of the principle, let's apply it to our Invoice application.
+
+Let's say our boss came to us and said that they want invoices to be saved to a database so that we can search them easily. We think okay, this is easy peasy boss, just give me a second!
+
+Liskov Substitution Principle
+The Liskov Substitution Principle states that subclasses should be substitutable for their base classes.
+
+This means that, given that class B is a subclass of class A, we should be able to pass an object of class B to any method that expects an object of class A and the method should not give any weird output in that case.
+
+This is the expected behavior, because when we use inheritance we assume that the child class inherits everything that the superclass has. The child class extends the behavior but never narrows it down.
+
+Therefore, when a class does not obey this principle, it leads to some nasty bugs that are hard to detect.
+
+Liskov's principle is easy to understand but hard to detect in code. So let's look at an example.
+
+Interface Segregation Principle
+Segregation means keeping things separated, and the Interface Segregation Principle is about separating the interfaces.
+
+The principle states that many client-specific interfaces are better than one general-purpose interface. Clients should not be forced to implement a function they do no need.
+
+Dependency Inversion Principle
+The Dependency Inversion principle states that our classes should depend upon interfaces or abstract classes instead of concrete classes and functions.
+
+In his article (2000), Uncle Bob summarizes this principle as follows:
+
+"If the OCP states the goal of OO architecture, the DIP states the primary mechanism".
+These two principles are indeed related and we have applied this pattern before while we were discussing the Open-Closed Principle.
+
+We want our classes to be open to extension, so we have reorganized our dependencies to depend on interfaces instead of concrete classes. Our PersistenceManager class depends on InvoicePersistence instead of the classes that implement that interface.]
+
 # Session management
 
 [Read more here](https://medium.com/@prashantramnyc/difference-between-session-cookies-vs-jwt-json-web-tokens-for-session-management-4be67d2f066e)
@@ -326,6 +378,8 @@ A regular DOS attack may be launched from a single source but a DDOS is a type o
 #### Mitigation
 
 1. Throttle incoming requests
+[What does it mean to throttle requests?
+API throttling is the process of limiting the number of API requests a user can make in a certain period. An application programming interface (API) functions as a gateway between a user and a software application.]  
 2. Build for scale
 
 ## Social Engineering Attack
@@ -350,6 +404,8 @@ The process of securely encoding data in suh a way that only authorized users wi
 
 - Symmetric-key algorithms
 - Asymmetric-key algorithms
+[What is symmetric and asymmetric algorithm?
+Asymmetric-key algorithms work in a similar manner to symmetric-key algorithms, where plaintext is combined with a key, input to an algorithm, and outputs ciphertext. The major difference is the keys used for the encryption and decryption portions are different, thus the asymmetry of the algorithm.]
 
 Encryption is **reversible only by authorized users**
 
@@ -370,15 +426,24 @@ Hashing is **not reversible**.
 | Useful for storing data that the user will need to access later. | Useful for improving the performance of your web app        | Useful for storing data that should not be persisted for a long time, such as session IDs |
 
 # What is an API?
+What API means?
+Application Programming Interface
+API stands for Application Programming Interface. In the context of APIs, the word Application refers to any software with a distinct function. Interface can be thought of as a contract of service between two applications.
 
 # What is REST?
+[What is REST used for?
+REST is a logical choice for building APIs that allow users to connect to, manage and interact with cloud services flexibly in a distributed environment. RESTful APIs are used by such sites as Amazon, Google, LinkedIn and Twitter.]
 
 # What is AJAX?
-
+[What is AJAX JavaScript used for?
+AJAX allows web pages to be updated asynchronously by exchanging data with a web server behind the scenes. This means that it is possible to update parts of a web page, without reloading the whole page.]
 # What is CORS?
+[What do CORS mean?
+Cross-Origin Resource Sharing
+Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources]  
 
 # Differences between Types and Interfaces
-
+[One major difference between type aliases vs interfaces are that interfaces are open and type aliases are closed. This means you can extend an interface by declaring it a second time. // In the other case a type cannot be changed outside of its declaration.]
 # Testing
 
 Software testing is a method to check whether a software product matches the expected requirements gathered from users and system specifications.
@@ -386,6 +451,10 @@ Software testing is a method to check whether a software product matches the exp
 ## Unit Testing
 
 Unit testing tests individual units of code, usually with zero or minimal external dependencies, to validate that each unit of the software behaves as expected. A unit may be an individual function, method, procedure, module or object.
+  
+[What are dependencies in React?
+Image result for external dependencies in react
+A dependency is just a package that your project uses. Very few javascript projects are entirely self-contained. When your project needs code from other projects in order to do its thing, those other projects are “dependencies”; your project depends on them to run]  
 
 ### Test Doubles
 
@@ -465,6 +534,7 @@ The change in state can happen as a response to user action or system-generated 
 ##Props
   
 Props are short for Properties. It is a React built-in object that stores the value of attributes of a tag and works similarly to HTML attributes.
+ [HTML attributes are a modifier of an HTML element type. An attribute either modifies the default functionality of an element type or provides functionality to certain element types unable to function correctly without them. In HTML syntax, an attribute is added to an HTML start tag]
 Props provide a way to pass data from one component to another component. Props are passed to the component in the same way as arguments are passed in a function.
 
 State can also be passed as props to child components
@@ -527,6 +597,8 @@ Standard built-in hooks simplified:
 •	useState: To manage states. Returns a stateful value and an updater function to update it.
 
 •	useEffect: To manage side-effects like API calls, subscriptions, timers, mutations, and more.
+  [What is useEffect for?
+What does useEffect do? By using this Hook, you tell React that your component needs to do something after render. React will remember the function you passed (we'll refer to it as our “effect”), and call it later after performing the DOM updates.]
 
 •	useContext: To return the current value for a context.
 
@@ -536,17 +608,21 @@ Standard built-in hooks simplified:
 
 -	1.The function we want to prevent from keep duplicating on each render
 -	2.Dependency array: function is only rerendered when any of the value in dependency array changes.
-
+[What is render in React JS?
+In React, Render is the technique that can redirect a page with the help of function render(). Most importantly, render a function we can use to define the HTML code within the HTML element. It helps to display certain views in the UI using certain logic defined in the render function and returns the output]
 •	useMemo: Memoization is an optimization technique that makes applications more efficient and hence faster. It does this by storing computation results in cache and retrieving that same information from the cache the next time it's needed instead of computing it again.This is used for expensive functions and computing expensive calculations.
 
 ## NB. useCallback and useMemo both expect a function and an array of dependencies. The difference is that useCallback returns its function when the dependencies change while useMemo calls its function and returns the result.
 
 •	useRef: It returns a ref object with a. current property. The ref object is mutable. It is mainly used to access a child component imperatively.
-
-•	useLayoutEffect: It fires at the end of all DOM mutations. It's best to use useEffect as much as possible over this one as the useLayoutEffect fires synchronously.
+[What is a ref object?
+Unlike state, ref is a plain JavaScript object with the current property that you can read and modify]
+•	useLayoutEffect: It fires at the end of all DOM mutations(changes). It's best to use useEffect as much as possible over this one as the useLayoutEffect fires synchronously.
 
 •	useDebugValue: Helps to display a label in React DevTools for custom hooks.
-
+[What is Devtools in React?
+Image result for react devtools
+React Developer Tools is a Chrome DevTools extension for the open-source React JavaScript library. It allows you to inspect the React component hierarchies in the Chrome Developer Tools. You will get two new tabs in your Chrome DevTools: "⚛️ Components" and "⚛️ Profiler"]
 # Events
 
 An event is an action that a user or system may trigger, such as pressing a key, a mouse clicks, etc.
@@ -554,14 +630,21 @@ An event is an action that a user or system may trigger, such as pressing a key,
 •	React events are named using camelCase, rather than lowercase in HTML.
 •	With JSX, you pass a function as the event handler, rather than a string in HTML.
 <Button onPress={lightItUp} />
-
+[n programming, an event handler is a callback routine that operates asynchronously once an event takes place. It dictates the action that follows the event. The programmer writes a code for this action to take place. An event is an action that takes place when a user interacts with a program.]
+  
+[What is asynchronous programming?
+Asynchronous programming is a technique that enables your program to start a potentially long-running task and still be able to be responsive to other events while that task runs, rather than having to wait until that task has finished. Once that task has finished, your program is presented with the result.]  
 ## Native Events
 
 Native events are fired directly by the browser - events like clicks, mouseovers, keypresses, etc. To receive those events on a Widget, you have to specifically sink the events. The generic events are, well, more generic.  
+
+[Widgets are small applications that add aesthetic appeal to your home screen while also displaying data at a glance and providing useful features.]
   
 ## Synthetic Events
 
 React has its own event handling system which is very similar to handling events on DOM elements. The react event handling system is known as Synthetic Events.
+
+ DOM stands for 'Document Object Model'. In simple terms, it is a structured representation of the HTML elements that are present in a webpage or web-app. DOM represents the entire UI of your application. The DOM is represented as a tree data structure.
 
 -	Synthetic events are a wrapper over the browser's native event.
 -	They are cross-browser compatible, meaning they are supported in all the browsers; are not browser specific.
@@ -631,7 +714,10 @@ The main difference between these two libraries is that Redux deals with changes
   
 On the other hand, Context deals with them as they happen on the component level.
   
-
+useContext: useContext is a hook that provides a way to pass data through the component tree without manually passing props down through each nested component.  
+Redux: Redux is a state managing library used in JavaScript apps. It is very popular for React and React-Native. It simply manages the state and data of your application.
+  
+[In React, Render is the technique that can redirect a page with the help of function render(). Most importantly, render a function we can use to define the HTML code within the HTML element. It helps to display certain views in the UI using certain logic defined in the render function and returns the output.]
 ## Advantages of Redux
 
 -	It is Highly Maintainable. ...
@@ -647,7 +733,11 @@ On the other hand, Context deals with them as they happen on the component level
 
 # What is production in React?
 
-The production build creates minified bundles, lighter-weight source maps, and optimized assets. This improves the load time. React recommends using production mode while deploying the react app. We now know that production build helps in optimizing performance.
+The production build creates minified bundles(Bundling combines multiple files into a single file. Minification performs a variety of different code optimizations to scripts and CSS, which results in smaller payloads), lighter-weight source maps(Source maps are just JSON files that essentially rebuild what the bundlers and transpilers changed. Their main purpose is to help debug your built, optimized code. It makes sense that if you have a bug and view the stack trace, you want to see your code and not the gibberish that webpack and babel spit out.[Webpack and Babel are tools for developers that optimize JavaScript applications.
+
+Webpack is a module bundler we can use to minify multiple files in a JavaScript project and increase the overall efficiency. A module bundler takes in all the assets and comes up with a single output file. This artefact can be imported into our HTML, making it a more lightweight project.
+
+As for Babel, it is a syntax converter and a transpiler. There may be times you want your code to be compatible with all browsers and environments, including the older ones. In such instances, a great option to try out is Babel]), and optimized assets. This improves the load time. React recommends using production mode while deploying the react app. We now know that production build helps in optimizing performance.
 
 # REACT Testing
 
@@ -664,7 +754,67 @@ Integration testing is the phase in software testing in which individual softwar
 
 is a software testing method that involves testing an application's workflow from beginning to end. This method aims to replicate real user scenarios to validate the system for integration and data integrity.
 
+## 401 Unauthorized
+ A 401 message means the server received an unauthenticated request.In this error, a message announces that the page couldn’t load because of invalid credentials for whatever reason
+
+How to fix it?
+It could be possible the login URL has changed, or the URL you entered is incorrect. However, if that’s not the case, try clearing the browser cache and cookies.
 
 
+## 404 Not Found
+This HTTP response is generated when a page the user is looking for cannot be found on the server. There could be multiple reasons behind 404 occurrences. Perhaps because the webmaster has deleted the page or the URL you have entered is incorrect (since it’s a client-side error).
+  
+How to fix it?
+Fixing a broken link (or, more specifically, a 404) is still an essential maintenance task. A more natural way to do this is by installing the Redirection plugin from the WordPress directory. You can then redirect it to any webpage on the site.
+  
+## 500 Internal Server Error
+A 500 Internal Server Error is a generic error that displays when something is wrong with your server. Because it’s a generic error message, there are a number of different causes including issues with WordPress plugins, PHP issues, database problems, and more.
+
+How to fix it?
+Fixing the 500 Internal Server Error is a bit onerous as more than one reason is to blame for its occurrence. You’ll probably want to read the full guide for this one.
+  
+## 502 Bad Gateway
+Unlike other HTTP error codes, 502 is different. A bad gateway occurs when one server on the internet receives an invalid response from another server. A 502 HTTP status code will be tacked on a screen when the server takes longer than expected to complete a request.
+
+How to fix it?
+Most of the time this can be fixed by simply refreshing the browser, or clearing the browser cache. If you have just migrated to the site, try waiting for 24 to 48 hours. You can even reach out to the hosting provider to check with them. Sometimes, a third-party CDN service or WordPress plugin could be the reason behind your 502 response. Try switching the WordPress theme to another if the fixes mentioned above don’t work.
+  
+## 301 Moved Permanently
+An HTTP 301 is when a specific webpage is permanently moved to a different URL. It’s not an error per se, but it does communicate important information.
+
+It can be on a page-level where you get pointed on another similar post (or even homepage for that matter) or a domain level.
+
+How to fix it?
+To make sure the redirection is flawless, check the redirect setup. If you have used a WordPress plugin, try switching it with Redirection. If you used the .htaccess file to perform the redirection, verify that you did it correctly. Here’s how to do that. Keep the domain level redirection for a few months, so Google knows the resource is moved permanently.
+
+## 302 Found
+This HTTP status code is similar to the 301, but it is used for a temporary redirect. This response tells Google that the page is moved temporarily and will be back to the original URL at some point. If done correctly, it will redirect the user to another URL in a couple of seconds.
+
+How to fix it?
+The easiest way to set up a 302 redirect is by using a WordPress plugin. You can install and use Rank Math from the WordPress directory.
+
+## 410 Gone
+This 410 Gone error is similar to the 404 response. Think of this as a permanent 404. When a webmaster decides to remove a post or page forever or republish it on another site, they can use this code.
+
+A 410 response tells Google the requested resource is permanently removed from the internet and will not reappear. This makes it easier to get the page de-crawled or de-indexed from Google.
+
+How to fix it?
+There are multiple reasons behind a 410 gone error. First, check the input URL and make sure it’s correct. Next, try debugging the update on the WordPress website. Uninstall the WordPress plugins or other third-party extensions. If none of this works, then it’s a problem from the server end. Find the .htaccess file. Next, locate the word “RewriteXXX” in the .htaccess text editor and enter the following code:
+
+RewriteEngine on
+RewriteRule ^(.*)$ http://yourwebsitename.con/expired_page $1 [R=410,L] 
+  When entering the code, replace [http://yourwebsitename.con/expired_page] with the URL that is expired, or where you’d like to add 410 responses.
+
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 # Component Documentation
